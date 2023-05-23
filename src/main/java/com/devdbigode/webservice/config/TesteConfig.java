@@ -8,9 +8,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.devdbigode.webservice.entites.Category;
 import com.devdbigode.webservice.entites.Order;
 import com.devdbigode.webservice.entites.User;
 import com.devdbigode.webservice.entites.enums.OrderStatus;
+import com.devdbigode.webservice.repositories.CategoryRepository;
 import com.devdbigode.webservice.repositories.OrderRepository;
 import com.devdbigode.webservice.repositories.UserRepository;
 
@@ -24,6 +26,9 @@ public class TesteConfig implements CommandLineRunner{
     @Autowired
     private OrderRepository orderRepository;  
 
+    @Autowired
+    private CategoryRepository categoryRepository; 
+
     @Override
     public void run(String... args) throws Exception {
         User u1 = new User("Maria Brown", "maria@gmail.com", "988888888", "123456");
@@ -33,7 +38,13 @@ public class TesteConfig implements CommandLineRunner{
         Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), u2, OrderStatus.DELIVERY);
         Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), u1, OrderStatus.WAITING_PAYMENT); 
 
+        Category cat1 = new Category(null, "Electronics"); 
+        Category cat2 = new Category(null, "Books"); 
+        Category cat3 = new Category(null, "Computers"); 
+
         userRepository.saveAll(Arrays.asList(u1, u2));
-        orderRepository.saveAll(Arrays.asList(o1, o2, o3)); 
+        orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+        
+        categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3)); 
     } 
 }
