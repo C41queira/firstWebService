@@ -3,6 +3,7 @@ package com.devdbigode.webservice.entites;
 import java.io.Serializable;
 import java.time.Instant;
 
+import com.devdbigode.webservice.entites.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Entity;
@@ -26,16 +27,20 @@ public class Order implements Serializable{
     @ManyToOne
     @JoinColumn(name = "client_id")
     private User client;
+
+    private Integer orderStatus; 
     
     public Order() {
     }
 
-    public Order(Integer id, Instant moment, User client) {
+    
+    public Order(Integer id, Instant moment, User client, OrderStatus orderStatus) {
         this.id = id;
         this.moment = moment;
         this.client = client;
+        setOrderStatus(orderStatus);
     }
-    
+
     public User getClient() {
         return client;
     }
@@ -53,6 +58,19 @@ public class Order implements Serializable{
     }
     public void setMoment(Instant moment) {
         this.moment = moment;
+    } 
+
+    public void setClient(User client) {
+        this.client = client;
+    }
+
+
+    public OrderStatus getOrderStatus() {
+        return OrderStatus.valueOf(orderStatus);
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus.getStatus();
     }
 
     @Override
