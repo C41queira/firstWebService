@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.devdbigode.webservice.entites.User;
@@ -30,7 +31,12 @@ public class UserServices {
     }
 
     public void delete(Integer id){
-        userRepository.deleteById(id);
+        try {
+            userRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException(id); 
+        }
+        
     }
 
     public User update(Integer id, User user){
